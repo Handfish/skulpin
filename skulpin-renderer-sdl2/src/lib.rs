@@ -56,9 +56,10 @@ impl<'a> Window for Sdl2Window<'a> {
 
     #[cfg(not(target_os = "windows"))]
     fn scale_factor(&self) -> f64 {
-        let physical_size = self.window.vulkan_drawable_size();
         let logical_size = self.window.size();
-        logical_size.0 as f64 / physical_size.0 as f64
+        let drawable_size = self.window.drawable_size();
+
+        logical_size.0 as f64 / drawable_size.0 as f64
     }
 
     unsafe fn create_vulkan_surface(
